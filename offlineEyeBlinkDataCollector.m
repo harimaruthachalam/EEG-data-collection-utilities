@@ -55,81 +55,112 @@ if isempty(singleBlinkAudio) || isempty(doubleBlinkAudio) || isempty(leftBlinkAu
 end
 
 %% Configurations
+isTestRun = 1;
 baseLinePause = 20;
 eyeBlinkPause = 1;
 noOfTrials = 5;
 ipAddress = '10.10.10.42';
 
 %% NetStation Connection
-NetStation('Connect', ipAddress);
-NetStation('StartRecording');
-NetStation('Synchronize');
+if isTestRun == 0
+    NetStation('Connect', ipAddress);
+    NetStation('StartRecording');
+    NetStation('Synchronize');
+end
 disp('Recording Starts');
 
 %% Baseline
 disp('Start Baseline');
-NetStation('Event','SBLS');
+if isTestRun == 0
+    NetStation('Event','SBLS');
+end
 pause(baseLinePause);
-NetStation('Event','SBLE');
+if isTestRun == 0
+    NetStation('Event','SBLE');
+end
 
 %% Data Collection
 for trials = 1 : noOfTrials
     clc;
     disp(['Trial ' num2str(trials) ' starts']);
     disp('Single Blink Instruction Playing...');
-    soundsc(singleBlinkAudio);
+    soundsc(singleBlinkAudio, singleBlinkAudioFS);
     pause(length(singleBlinkAudio) / singleBlinkAudioFS);
     pause(eyeBlinkPause);
     disp('Beep');
-    NetStation('Event','BPST');
+    if isTestRun == 0
+        NetStation('Event','BPST');
+    end
     soundsc(beepSound);
     pause(beepDuration);
-    NetStation('Event','BPED');
-    NetStation('Event','BESS');
+    if isTestRun == 0
+        NetStation('Event','BPED');
+        NetStation('Event','BESS');
+    end
     pause(eyeBlinkPause);
-    NetStation('Event','BESE');
+    if isTestRun == 0
+        NetStation('Event','BESE');
+    end
     pause(eyeBlinkPause * 2);
     
     disp('Double Blink Instruction Playing...');
-    soundsc(doubleBlinkAudio);
+    soundsc(doubleBlinkAudio, doubleBlinkAudioFS);
     pause(length(doubleBlinkAudio) / doubleBlinkAudioFS);
     pause(eyeBlinkPause);
     disp('Beep');
-    NetStation('Event','BPST');
+    if isTestRun == 0
+        NetStation('Event','BPST');
+    end
     soundsc(beepSound);
     pause(beepDuration);
-    NetStation('Event','BPED');
-    NetStation('Event','BEDS');
+    if isTestRun == 0
+        NetStation('Event','BPED');
+        NetStation('Event','BEDS');
+    end
     pause(eyeBlinkPause);
-    NetStation('Event','BEDE');
+    if isTestRun == 0
+        NetStation('Event','BEDE');
+    end
     pause(eyeBlinkPause * 2);
     
     disp('Left Blink Instruction Playing...');
-    soundsc(leftBlinkAudio);
+    soundsc(leftBlinkAudio, leftBlinkAudioFS);
     pause(length(leftBlinkAudio) / leftBlinkAudioFS);
     pause(eyeBlinkPause);
     disp('Beep');
-    NetStation('Event','BPST');
+    if isTestRun == 0
+        NetStation('Event','BPST');
+    end
     soundsc(beepSound);
     pause(beepDuration);
-    NetStation('Event','BPED');
-    NetStation('Event','LEBS');
+    if isTestRun == 0
+        NetStation('Event','BPED');
+        NetStation('Event','LEBS');
+    end
     pause(eyeBlinkPause);
-    NetStation('Event','LEBE');
+    if isTestRun == 0
+        NetStation('Event','LEBE');
+    end
     pause(eyeBlinkPause * 2);
     
     disp('Right Blink Instruction Playing...');
-    soundsc(rightBlinkAudio);
+    soundsc(rightBlinkAudio, rightBlinkAudioFS);
     pause(length(rightBlinkAudio) / rightBlinkAudioFS);
     pause(eyeBlinkPause);
     disp('Beep');
-    NetStation('Event','BPST');
+    if isTestRun == 0
+        NetStation('Event','BPST');
+    end
     soundsc(beepSound);
     pause(beepDuration);
-    NetStation('Event','BPED');
-    NetStation('Event','LEBS');
+    if isTestRun == 0
+        NetStation('Event','BPED');
+        NetStation('Event','LEBS');
+    end
     pause(eyeBlinkPause);
-    NetStation('Event','LEBE');
+    if isTestRun == 0
+        NetStation('Event','LEBE');
+    end
     pause(eyeBlinkPause * 2);
     
 end
@@ -138,9 +169,13 @@ disp('Trials finished');
 
 %% Baseline
 disp('Start Baseline');
-NetStation('Event','EBLS');
+if isTestRun == 0
+    NetStation('Event','EBLS');
+end
 pause(baseLinePause);
-NetStation('Event','EBLE');
+if isTestRun == 0
+    NetStation('Event','EBLE');
+end
 
 end
 
