@@ -175,6 +175,8 @@ end
 pause(baseLinePause);
 if isTestRun == 0
     NetStation('Event','EBLE');
+    NetStation('StopRecording');
+    NetStation('Disconnect');
 end
 
 end
