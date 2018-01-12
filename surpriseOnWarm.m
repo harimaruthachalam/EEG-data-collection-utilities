@@ -6,6 +6,23 @@ function surpriseOnWarm
 % Use configuration to specify path and audio files.
 % Path in configuration should have trailing slash and files shouldn't have
 % preceding slash.
+%%%%----------ALL CODES FOR NETSTATION------%%%%%
+% SBLS - Start BaseLine Start
+% SBLE - Start BaseLine End
+% RTST - Relax Tone StarT
+% RTED - Relax Tone EnD
+% BAST - BAng StarT
+% BAED - BAng EnD
+% CBST - Cry Baby StarT
+% CBED - Cry Baby EnD
+% SIST - SIren StarT
+% SIED - SIren EnD
+% TWST - Train Whistle StarT
+% TWED - Train Whistle EnD
+% TOST - TOing StarT
+% TOED - TOing EnD
+% EBLS - End BaseLine Start
+% EBLE - End BaseLine End
 
 close all;
 clear;
