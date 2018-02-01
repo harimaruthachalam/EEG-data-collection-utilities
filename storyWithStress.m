@@ -1,5 +1,5 @@
 function storyWithStress
-% Rini Sharon, Hari Maruthachalam - Updated on 15, 2018
+% Rini Sharon, Hari Maruthachalam - Updated on Feb 1, 2018
 % This MATLAB file records EEG signals for pleasant, annoying sounds;
 % statements with various stress, pause; and attention on voice
 % Audio path should be trailing with a slash
@@ -37,8 +37,8 @@ pauseTime = 2;
 interStimuliPauseTime = 2;
 promptTimeForClick = 3;
 path = '';
-recStartAudioFile = '';
-cockTailAudioFile = '';
+recStartAudioFile = 'rec_start.wav';
+cockTailAudioFile = 'c_p.wav';
 
 %% Gloabal Variables
 global button;
@@ -511,9 +511,9 @@ if isTestRun == 0
     NetStation('Event','CLE');
 end
 
-
 soundsc(beepSound);
 pause(beepDuration);
+pause(interStimuliPauseTime);
 
 if isTestRun == 0
     NetStation('Event','AN1S');
@@ -526,8 +526,33 @@ if isTestRun == 0
     NetStation('Event','AN1E');
 end
 
+pause(interStimuliPauseTime);
+
 soundsc(beepSound);
 pause(beepDuration);
+if isTestRun == 0
+    NetStation('Event','CLS');
+end
+button=[];
+mouseClickTester;
+pause(promptTimeForClick);
+close;
+if isTestRun == 0
+    if isempty(button)
+        NetStation('Event','NC');
+    elseif sum(button{1} == 'n') == 1
+        NetStation('Event','LC');
+    elseif sum(button{1} == 'a') == 1
+        NetStation('Event','RC');
+    else
+        NetStation('Event','PC');
+    end
+    NetStation('Event','CLE');
+end
+
+soundsc(beepSound);
+pause(beepDuration);
+pause(interStimuliPauseTime);
 
 
 if isTestRun == 0
@@ -564,9 +589,9 @@ if isTestRun == 0
     NetStation('Event','CLE');
 end
 
-
 soundsc(beepSound);
 pause(beepDuration);
+pause(interStimuliPauseTime);
 
 if isTestRun == 0
     NetStation('Event','AN2S');
@@ -579,8 +604,33 @@ if isTestRun == 0
     NetStation('Event','AN2E');
 end
 
+pause(interStimuliPauseTime);
+
 soundsc(beepSound);
 pause(beepDuration);
+if isTestRun == 0
+    NetStation('Event','CLS');
+end
+button=[];
+mouseClickTester;
+pause(promptTimeForClick);
+close;
+if isTestRun == 0
+    if isempty(button)
+        NetStation('Event','NC');
+    elseif sum(button{1} == 'n') == 1
+        NetStation('Event','LC');
+    elseif sum(button{1} == 'a') == 1
+        NetStation('Event','RC');
+    else
+        NetStation('Event','PC');
+    end
+    NetStation('Event','CLE');
+end
+
+soundsc(beepSound);
+pause(beepDuration);
+pause(interStimuliPauseTime);
 
 if isTestRun == 0
     NetStation('Event','PL3S');
@@ -616,9 +666,9 @@ if isTestRun == 0
     NetStation('Event','CLE');
 end
 
-
 soundsc(beepSound);
 pause(beepDuration);
+pause(interStimuliPauseTime);
 
 if isTestRun == 0
     NetStation('Event','AN3S');
@@ -630,9 +680,33 @@ pause(size(y,1)/Fs);
 if isTestRun == 0
     NetStation('Event','AN3E');
 end
+pause(interStimuliPauseTime);
 
 soundsc(beepSound);
 pause(beepDuration);
+if isTestRun == 0
+    NetStation('Event','CLS');
+end
+button=[];
+mouseClickTester;
+pause(promptTimeForClick);
+close;
+if isTestRun == 0
+    if isempty(button)
+        NetStation('Event','NC');
+    elseif sum(button{1} == 'n') == 1
+        NetStation('Event','LC');
+    elseif sum(button{1} == 'a') == 1
+        NetStation('Event','RC');
+    else
+        NetStation('Event','PC');
+    end
+    NetStation('Event','CLE');
+end
+
+soundsc(beepSound);
+pause(beepDuration);
+pause(interStimuliPauseTime);
 
 
 if isTestRun == 0
@@ -669,9 +743,9 @@ if isTestRun == 0
     NetStation('Event','CLE');
 end
 
-
 soundsc(beepSound);
 pause(beepDuration);
+pause(interStimuliPauseTime);
 
 if isTestRun == 0
     NetStation('Event','AN4S');
@@ -684,8 +758,33 @@ if isTestRun == 0
     NetStation('Event','AN4E');
 end
 
+pause(interStimuliPauseTime);
+
 soundsc(beepSound);
 pause(beepDuration);
+if isTestRun == 0
+    NetStation('Event','CLS');
+end
+button=[];
+mouseClickTester;
+pause(promptTimeForClick);
+close;
+if isTestRun == 0
+    if isempty(button)
+        NetStation('Event','NC');
+    elseif sum(button{1} == 'n') == 1
+        NetStation('Event','LC');
+    elseif sum(button{1} == 'a') == 1
+        NetStation('Event','RC');
+    else
+        NetStation('Event','PC');
+    end
+    NetStation('Event','CLE');
+end
+
+soundsc(beepSound);
+pause(beepDuration);
+pause(interStimuliPauseTime);
 
 %% Data Collection - Pleasant and Annoying sounds with explainations
 % Instruction to the subject
@@ -703,6 +802,7 @@ player.play;
 pause(size(y,1)/Fs);
 
 pause(pauseTime);
+pause(interStimuliPauseTime);
 
 % Example 1
 disp('Example 1 on Pleasant and Annoying with explainations...');
@@ -750,6 +850,7 @@ end
 
 soundsc(beepSound);
 pause(beepDuration);
+pause(interStimuliPauseTime);
 
 % Example 2
 disp('Example 2 on Pleasant and Annoying with explainations...');
@@ -797,6 +898,7 @@ end
 
 soundsc(beepSound);
 pause(beepDuration);
+pause(interStimuliPauseTime);
 
 % Example 3
 disp('Example 3 on Pleasant and Annoying with explainations...');
@@ -844,6 +946,7 @@ end
 
 soundsc(beepSound);
 pause(beepDuration);
+pause(interStimuliPauseTime);
 
 % Example 4
 disp('Example 4 on Pleasant and Annoying with explainations...');
@@ -891,6 +994,7 @@ end
 
 soundsc(beepSound);
 pause(beepDuration);
+pause(interStimuliPauseTime);
 
 
 % Example 5
@@ -939,6 +1043,7 @@ end
 
 soundsc(beepSound);
 pause(beepDuration);
+pause(interStimuliPauseTime);
 
 % Example 6
 disp('Example 6 on Pleasant and Annoying with explainations...');
@@ -986,6 +1091,7 @@ end
 
 soundsc(beepSound);
 pause(beepDuration);
+pause(interStimuliPauseTime);
 
 
 % Example 7
@@ -1034,6 +1140,7 @@ end
 
 soundsc(beepSound);
 pause(beepDuration);
+pause(interStimuliPauseTime);
 
 % Example 8
 disp('Example 8 on Pleasant and Annoying with explainations...');
@@ -1081,6 +1188,7 @@ end
 
 soundsc(beepSound);
 pause(beepDuration);
+pause(interStimuliPauseTime);
 
 
 %% Data Collection - Pause Intervals Expriements
