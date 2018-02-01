@@ -1,5 +1,5 @@
 function offlineEyeBlinkDataCollector
-% Hari Maruthachalam - Updated on Jan 12, 2018
+% Hari Maruthachalam - Updated on Feb 1, 2018
 % Usage: offlineEyeBlinkDataCollector
 % This program will collect data from EEG and annotates for various eye blinks
 % The data collection machine is EGI Netstation
@@ -47,10 +47,10 @@ beepDuration = beepLength / fs;
 
 %% Needed files
 try
-[singleBlinkAudio, singleBlinkAudioFS] = audioread();
-[doubleBlinkAudio, doubleBlinkAudioFS] = audioread();
-[leftBlinkAudio, leftBlinkAudioFS] = audioread();
-[rightBlinkAudio, rightBlinkAudioFS] = audioread();
+[singleBlinkAudio, singleBlinkAudioFS] = audioread('bbe.wav');
+[doubleBlinkAudio, doubleBlinkAudioFS] = audioread('bbett.wav');
+[leftBlinkAudio, leftBlinkAudioFS] = audioread('leb.wav');
+[rightBlinkAudio, rightBlinkAudioFS] = audioread('reb.wav');
 catch
     error('Audio files are not loaded! Check path and files.');
 end
