@@ -1,5 +1,5 @@
 function surpriseOnWarm
-% Rini Sharon, Hari Maruthachalam - Updated on Jan 12, 2018
+% Rini Sharon, Hari Maruthachalam - Updated on Feb 1, 2018
 % Usage: surpriseOnWarm
 % This code will present audio stimuli to the subject. We present
 % relaxation tone to the subject along with various surprise sounds.
@@ -34,18 +34,18 @@ baseLinePause = 20;
 noOfTrials = 5;
 ipAddress = '10.10.10.42';
 noOfSurpriseTone = 5;
-path = ''; % With trailing slash
-relaxTone5SecFile = '';
-relaxTone10SecFile = '';
-relaxTone20SecFile = '';
-relaxTone30SecFile = '';
-relaxTone40SecFile = '';
-relaxTone50SecFile = '';
-babyCryAudioFile = '';
-sirenAudioFile = '';
-bangAudioFile = '';
-trainWhistleAudioFile = '';
-toingAudioFile = '';
+path = 'D:\scriptsEEGDataCollection\cog_surp_sounds_experiment_data_collection\'; % With trailing slash
+relaxTone5SecFile = 'r5.wav';
+relaxTone10SecFile = 'r10.wav';
+relaxTone20SecFile = 'r20.wav';
+relaxTone30SecFile = 'r30.wav';
+relaxTone40SecFile = 'r40.wav';
+relaxTone50SecFile = 'r50.wav';
+babyCryAudioFile = 'cry_baby.wav';
+sirenAudioFile = 'siren.wav';
+bangAudioFile = 'bang.wav';
+trainWhistleAudioFile = 'train_whistle.wav';
+toingAudioFile = 'toing.wav';
 numSurprise = [1, 2];
 
 %% Setup Check
@@ -119,94 +119,95 @@ for trials = 1 : noOfTrials
         end
         soundsc(relaxTone5SecAudio, relaxTone5SecFs);
         pause(length(relaxTone5SecAudio) / relaxTone5SecFs);
-    end
-    if isTestRun == 0
-        NetStation('Event','RTED');
-    end
-    for iter = 1 : length(numSurprise)
-        if randomSurprise == 1
-            switch surprisePremutation(iter)
-                case 1
-                    disp('Relaxation Tone for 10 seconds...');
-                    audioFileChosen = relaxTone10SecAudio;
-                    audioFileChosenFs = relaxTone10SecFs;
-                case 2
-                    disp('Relaxation Tone for 20 seconds...');
-                    audioFileChosen = relaxTone20SecAudio;
-                    audioFileChosenFs = relaxTone20SecFs;
-                case 3
-                    disp('Relaxation Tone for 30 seconds...');
-                    audioFileChosen = relaxTone30SecAudio;
-                    audioFileChosenFs = relaxTone30SecFs;
-                case 4
-                    disp('Relaxation Tone for 40 seconds...');
-                    audioFileChosen = relaxTone40SecAudio;
-                    audioFileChosenFs = relaxTone40SecFs;
-                case 5
-                    disp('Relaxation Tone for 50 seconds...');
-                    audioFileChosen = relaxTone50SecAudio;
-                    audioFileChosenFs = relaxTone50SecFs;
-            end
-            if isTestRun == 0
-                NetStation('Event','RTST');
-            end
-            soundsc(audioFileChosen, audioFileChosenFs);
-            pause(length(audioFileChosen) / audioFileChosenFs);
-            if isTestRun == 0
-                NetStation('Event','RTED');
-            end
-        else
-            disp('Surprise Tone Playing...');
-            switch surprisePremutation(iter)
-                case 1
-                    if isTestRun == 0
-                        NetStation('Event','CBST');
-                    end
-                    soundsc(babyCryAudio, babyCryAudioFs);
-                    pause(length(babyCryAudio) / babyCryAudioFs);
-                    if isTestRun == 0
-                        NetStation('Event','CBED');
-                    end
-                case 2
-                    if isTestRun == 0
-                        NetStation('Event','SIST');
-                    end
-                    soundsc(sirenAudio, sirenAudioFs);
-                    pause(length(sirenAudio) / sirenAudioFs);
-                    if isTestRun == 0
-                        NetStation('Event','SIED');
-                    end
-                case 3
-                    if isTestRun == 0
-                        NetStation('Event','BAST');
-                    end
-                    soundsc(bangAudio, bangAudioFs);
-                    pause(length(bangAudio) / bangAudioFs);
-                    if isTestRun == 0
-                        NetStation('Event','BAED');
-                    end
-                case 4
-                    if isTestRun == 0
-                        NetStation('Event','TWST');
-                    end
-                    soundsc(trainWhistleAudio, trainWhistleAudioFs);
-                    pause(length(trainWhistleAudio) / trainWhistleAudioFs);
-                    if isTestRun == 0
-                        NetStation('Event','TWED');
-                    end
-                case 5
-                    if isTestRun == 0
-                        NetStation('Event','TOST');
-                    end
-                    soundsc(toingAudio, toingAudioFs);
-                    pause(length(toingAudio) / toingAudioFs);
-                    if isTestRun == 0
-                        NetStation('Event','TOED');
-                    end
+        
+        if isTestRun == 0
+            NetStation('Event','RTED');
+        end
+        for iter = 1 : length(numSurprise)
+            if randomSurprise(iter) == 1
+                switch surprisePremutation(subTrial)
+                    case 1
+                        disp('Relaxation Tone for 10 seconds...');
+                        audioFileChosen = relaxTone10SecAudio;
+                        audioFileChosenFs = relaxTone10SecFs;
+                    case 2
+                        disp('Relaxation Tone for 20 seconds...');
+                        audioFileChosen = relaxTone20SecAudio;
+                        audioFileChosenFs = relaxTone20SecFs;
+                    case 3
+                        disp('Relaxation Tone for 30 seconds...');
+                        audioFileChosen = relaxTone30SecAudio;
+                        audioFileChosenFs = relaxTone30SecFs;
+                    case 4
+                        disp('Relaxation Tone for 40 seconds...');
+                        audioFileChosen = relaxTone40SecAudio;
+                        audioFileChosenFs = relaxTone40SecFs;
+                    case 5
+                        disp('Relaxation Tone for 50 seconds...');
+                        audioFileChosen = relaxTone50SecAudio;
+                        audioFileChosenFs = relaxTone50SecFs;
+                end
+                if isTestRun == 0
+                    NetStation('Event','RTST');
+                end
+                soundsc(audioFileChosen, audioFileChosenFs);
+                pause(length(audioFileChosen) / audioFileChosenFs);
+                if isTestRun == 0
+                    NetStation('Event','RTED');
+                end
+            else
+                disp('Surprise Tone Playing...');
+                switch surprisePremutation(subTrial)
+                    case 1
+                        if isTestRun == 0
+                            NetStation('Event','CBST');
+                        end
+                        soundsc(babyCryAudio, babyCryAudioFs);
+                        pause(length(babyCryAudio) / babyCryAudioFs);
+                        if isTestRun == 0
+                            NetStation('Event','CBED');
+                        end
+                    case 2
+                        if isTestRun == 0
+                            NetStation('Event','SIST');
+                        end
+                        soundsc(sirenAudio, sirenAudioFs);
+                        pause(length(sirenAudio) / sirenAudioFs);
+                        if isTestRun == 0
+                            NetStation('Event','SIED');
+                        end
+                    case 3
+                        if isTestRun == 0
+                            NetStation('Event','BAST');
+                        end
+                        soundsc(bangAudio, bangAudioFs);
+                        pause(length(bangAudio) / bangAudioFs);
+                        if isTestRun == 0
+                            NetStation('Event','BAED');
+                        end
+                    case 4
+                        if isTestRun == 0
+                            NetStation('Event','TWST');
+                        end
+                        soundsc(trainWhistleAudio, trainWhistleAudioFs);
+                        pause(length(trainWhistleAudio) / trainWhistleAudioFs);
+                        if isTestRun == 0
+                            NetStation('Event','TWED');
+                        end
+                    case 5
+                        if isTestRun == 0
+                            NetStation('Event','TOST');
+                        end
+                        soundsc(toingAudio, toingAudioFs);
+                        pause(length(toingAudio) / toingAudioFs);
+                        if isTestRun == 0
+                            NetStation('Event','TOED');
+                        end
+                end
             end
         end
+        disp('SubTrial Finished...');
     end
-    disp('SubTrial Finished...');
 end
 disp('Trials are finished...');
 
