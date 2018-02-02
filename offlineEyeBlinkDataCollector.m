@@ -1,5 +1,6 @@
 function offlineEyeBlinkDataCollector
 % Hari Maruthachalam - Updated on Feb 1, 2018
+% Sidharth Aggarwal - Updated on Feb 2, 2018
 % Usage: offlineEyeBlinkDataCollector
 % This program will collect data from EEG and annotates for various eye blinks
 % The data collection machine is EGI Netstation
@@ -19,6 +20,12 @@ function offlineEyeBlinkDataCollector
 % REBE - Right Eye Blink End
 % EBLS - End BaseLine Start
 % EBLE - End BaseLine End
+% BEFS - Both Eye Forced Single Blink Start
+% BEFE - Both Eye Forced Single Blink End
+% BETS - Both Eye Triple Blink Start
+% BETE - Both Eye Triple Blink End
+% SEBS - Spontaneous Eye Blink Start
+% SEBE - Spontaneous Eye Blink End
 
 %% Check List
 close all;
@@ -51,6 +58,9 @@ try
 [doubleBlinkAudio, doubleBlinkAudioFS] = audioread('bbett.wav');
 [leftBlinkAudio, leftBlinkAudioFS] = audioread('leb.wav');
 [rightBlinkAudio, rightBlinkAudioFS] = audioread('reb.wav');
+[forcedBlinkAudio, forcedBlinkAudioFS] = audioread();
+[tripleBlinkAudio, tripleBlinkAudioFS] = audioread();
+[spontaneousBlinkAudio, spontaneousBlinkAudioFS] = audioread();
 catch
     error('Audio files are not loaded! Check path and files.');
 end
@@ -59,6 +69,7 @@ end
 isTestRun = 1;
 baseLinePause = 20;
 eyeBlinkPause = 1;
+spontaneousRelaxPause = 120;
 noOfTrials = 5;
 ipAddress = '10.10.10.42';
 
@@ -124,6 +135,26 @@ for trials = 1 : noOfTrials
     end
     pause(eyeBlinkPause * 2);
     
+    disp('Triple Blink Instruction Playing...');
+    soundsc(tripleBlinkAudio, tripleBlinkAudioFS);
+    pause(length(tripleBlinkAudio) / tripleBlinkAudioFS);
+    pause(eyeBlinkPause);
+    disp('Beep');
+    if isTestRun == 0
+        NetStation('Event','BPST');
+    end
+    soundsc(beepSound);
+    pause(beepDuration);
+    if isTestRun == 0
+        NetStation('Event','BPED');
+        NetStation('Event','BETS');
+    end
+    pause(eyeBlinkPause);
+    if isTestRun == 0
+         NetStation('Event','BETE');
+    end
+    pause(eyeBlinkPause * 2);
+    
     disp('Left Blink Instruction Playing...');
     soundsc(leftBlinkAudio, leftBlinkAudioFS);
     pause(length(leftBlinkAudio) / leftBlinkAudioFS);
@@ -164,7 +195,42 @@ for trials = 1 : noOfTrials
     end
     pause(eyeBlinkPause * 2);
     
+   
+    disp('Forced Single Blink Instruction Playing...');
+    soundsc(forcedBlinkAudio, forcedBlinkAudioFS);
+    pause(length(forcedBlinkAudio) / forcedBlinkAudioFS);
+    pause(eyeBlinkPause);
+    disp('Beep');
+    if isTestRun == 0
+        NetStation('Event','BPST');
+    end
+    soundsc(beepSound);
+    pause(beepDuration);
+    if isTestRun == 0
+        NetStation('Event','BPED');
+        NetStation('Event','BEFS');
+    end
+    pause(eyeBlinkPause);
+    if isTestRun == 0
+        NetStation('Event','BEFE');
+    end
+    pause(eyeBlinkPause * 2);
+    
 end
+
+    disp('Relax for some time...');
+    soundsc(spontaneousBlinkAudio);
+    pause(length(spontaneousBlinkAudio) / spontaneousBlinkAudioFS);
+    pause(eyeBlinkPause);
+    if isTestRun == 0
+        NetStation('Event','SEBS');
+    end
+    pause(spontaneousRelaxPause);
+    if isTestRun == 0
+        NetStation('Event','SEBD');
+    end
+    pause(eyeBlinkPause * 2);
+
 
 disp('Trials finished');
 
